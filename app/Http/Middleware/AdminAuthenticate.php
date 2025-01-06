@@ -17,10 +17,10 @@ class AdminAuthenticate
     public function handle(Request $request, Closure $next): Response
     {
         // Check if the user is authenticated and has an 'admin' role
-        if (Auth::check() && Auth::user()->role === 'admin') {
+        if (Auth::guard('admin')->check() && Auth::guard('admin')->user()->role === 2) {
             return $next($request);
         }
         // Redirect to login or show 403 error if unauthorized
-        return redirect()->route('login')->with('error', 'Unauthorized Access');
+        return redirect()->route('admin.login')->with('error', 'Unauthorized Access');
     }
 }
